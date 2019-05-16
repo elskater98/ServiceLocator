@@ -10,7 +10,10 @@ public class CachedServiceLocator implements ServiceLocator {
     }
 
     public void setService(String name, Factory factory) throws LocatorError {
-        setConstant(name, factory.create(this));
+        if (!cachedServices.containsKey(name))
+            cachedServices.put(name, factory);
+        else
+            throw new LocatorError(new ClassCastException());
     }
 
     public void setConstant(String name, Object value) throws LocatorError {
