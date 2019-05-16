@@ -74,12 +74,28 @@ public class SimpleServiceLocatorTest {
     @Test
     void setServiceTestC1() throws LocatorError{
         Factory factoryC1 = new FactoryC1();
-        simpleServiceLocator.setConstant("S", "Hola");
+        String constant = new String("Hola");
+
+        simpleServiceLocator.setConstant("S", constant);
         simpleServiceLocator.setService("C", factoryC1);
         Object object = simpleServiceLocator.getObject("C");
-        ImplementationC1 implementationC1 = (ImplementationC1) object;
 
-        assertEquals("Hola",implementationC1.getS());
+        ImplementationC1 implementationC1 = (ImplementationC1) object;
+        assertEquals(constant,implementationC1.getS());
+
+    }
+
+    @Test
+    void setServiceTestD1() throws LocatorError{
+        Factory factoryD1 = new FactoryD1();
+        int constant = 0;
+
+        simpleServiceLocator.setConstant("I", constant);
+        simpleServiceLocator.setService("D", factoryD1);
+        Object object = simpleServiceLocator.getObject("D");
+
+        ImplementationD1 implementationD1 = (ImplementationD1) object;
+        assertEquals(constant, implementationD1.getI());
 
     }
 
