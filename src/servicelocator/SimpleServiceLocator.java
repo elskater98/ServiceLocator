@@ -15,14 +15,14 @@ public class SimpleServiceLocator implements ServiceLocator {
         if (!factories.containsKey(name))
             factories.put(name, factory.create(this));
         else
-            throw new LocatorError();
+            throw new LocatorError(new ClassCastException());
     }
 
     public void setConstant(String name, Object value) throws LocatorError {
             if (!constants.containsKey(name))
                 constants.put(name, value);
             else
-                throw new LocatorError();
+                throw new LocatorError(new ClassCastException());
     }
 
     public Object getObject(String name) throws LocatorError {
@@ -31,6 +31,6 @@ public class SimpleServiceLocator implements ServiceLocator {
         else if (factories.containsKey(name))
             return factories.get(name);
         else
-            throw new LocatorError();
+            throw new LocatorError(new ClassCastException());
     }
 }

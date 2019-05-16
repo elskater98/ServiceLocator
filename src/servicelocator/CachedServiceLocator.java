@@ -1,15 +1,29 @@
 package servicelocator;
 
-public class CachedServiceLocator implements ServiceLocator {
-    public void setService(String name, Factory factory) throws LocatorError {
+import java.util.HashMap;
 
+public class CachedServiceLocator implements ServiceLocator {
+    private HashMap<String, Object> cachedServices;
+
+    public CachedServiceLocator(){
+        cachedServices = new HashMap<>();
+    }
+
+    public void setService(String name, Factory factory) throws LocatorError {
+        setConstant(name, factory.create(this));
     }
 
     public void setConstant(String name, Object value) throws LocatorError {
-
+        if (!cachedServices.containsKey(name))
+            cachedServices.put(name, value);
+        else
+            throw new LocatorError(new ClassCastException());
     }
 
     public Object getObject(String name) throws LocatorError {
-        return null;
+        if (cachedServices.containsKey(name))
+            return cachedServices.get(name);
+        else
+            throw new LocatorError(new ClassCastException());
     }
 }
