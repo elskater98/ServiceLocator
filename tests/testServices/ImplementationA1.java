@@ -6,4 +6,10 @@ public class ImplementationA1 implements InterfaceA {
     public ImplementationA1(InterfaceB b, InterfaceC c){
         this.b = b; this.c = c;
     }
+    public InterfaceB getB(){
+        return b;
+    }
+    public InterfaceC getC(){
+        return c;
+    }
 }

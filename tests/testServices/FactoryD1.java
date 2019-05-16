@@ -11,7 +11,7 @@ public class FactoryD1 implements Factory {
             int i = (int) sl.getObject("I");
             return new ImplementationD1(i);
         } catch (ClassCastException ex){
-            throw new LocatorError(ex);
+            throw new LocatorError();
         }
     }
 }
