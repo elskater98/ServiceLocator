@@ -6,9 +6,7 @@ import servicelocator.Factory;
 import servicelocator.CachedServiceLocator;
 import servicelocator.LocatorError;
 import testServices.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CachedServiceLocatorTest {
@@ -50,15 +48,16 @@ public class CachedServiceLocatorTest {
         InterfaceD interfaceD = new ImplementationD1(0);
         InterfaceB interfaceB = new ImplementationB1(interfaceD);
         InterfaceC interfaceC = new ImplementationC1("Hola");
-
         cachedServiceLocator.setConstant("B",interfaceB);
         cachedServiceLocator.setConstant("C", interfaceC);
         cachedServiceLocator.setService("A", factoryA1);
+
         Object object = cachedServiceLocator.getObject("A");
 
         ImplementationA1 implementationA1 = (ImplementationA1) object;
         assertEquals(interfaceB, implementationA1.getB());
         assertEquals(interfaceC, implementationA1.getC());
+
     }
 
     @Test
@@ -77,7 +76,7 @@ public class CachedServiceLocatorTest {
     @Test
     void setServiceTestC1() throws LocatorError{
         Factory factoryC1 = new FactoryC1();
-        String constant = new String("Hola");
+        String constant = "Hola";
 
         cachedServiceLocator.setConstant("S", constant);
         cachedServiceLocator.setService("C", factoryC1);
