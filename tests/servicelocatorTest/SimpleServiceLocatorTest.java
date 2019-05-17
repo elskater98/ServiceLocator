@@ -31,7 +31,6 @@ public class SimpleServiceLocatorTest {
 
     }
 
-
     @Test
     void setConstantTestException(){
         Object object1 = new Object();
@@ -41,6 +40,7 @@ public class SimpleServiceLocatorTest {
             simpleServiceLocator.setConstant("s", object1);
             simpleServiceLocator.setConstant("s",object11);
         });
+
     }
 
     @Test
@@ -50,17 +50,29 @@ public class SimpleServiceLocatorTest {
         InterfaceB interfaceB = new ImplementationB1(interfaceD);
         InterfaceC interfaceC = new ImplementationC1("Hola");
 
+        //Test with one factory same object reference
         simpleServiceLocator.setConstant("B",interfaceB);
         simpleServiceLocator.setConstant("C", interfaceC);
         simpleServiceLocator.setService("A", factoryA1);
-
         Object object = simpleServiceLocator.getObject("A");
         Object object1 = simpleServiceLocator.getObject("A");
         assertNotSame(object, object1);
 
+        //Test setting the factory correctly
         ImplementationA1 implementationA1 = (ImplementationA1) object;
-        assertSame(interfaceB, implementationA1.getB());
-        assertSame(interfaceC, implementationA1.getC());
+        assertEquals(interfaceB, implementationA1.getB());
+        assertEquals(interfaceC, implementationA1.getC());
+
+        //Test with two factory
+        Factory factoryB1 = new FactoryB1();
+        InterfaceD interfaceD1 = new ImplementationD1(0);
+
+        simpleServiceLocator.setConstant("D", interfaceD1);
+        simpleServiceLocator.setService("B1", factoryB1);
+        Object object2 = simpleServiceLocator.getObject("B1");
+        Object object3 = simpleServiceLocator.getObject("B1");
+        assertNotSame(object2, object3);
+
     }
 
     @Test
@@ -70,13 +82,23 @@ public class SimpleServiceLocatorTest {
 
         simpleServiceLocator.setConstant("D", interfaceD);
         simpleServiceLocator.setService("B", factoryB1);
-
         Object object = simpleServiceLocator.getObject("B");
         Object object1 = simpleServiceLocator.getObject("B");
         assertNotSame(object, object1);
 
         ImplementationB1 implementationB1 = (ImplementationB1) object;
-        assertSame(interfaceD,implementationB1.getD());
+        assertEquals(interfaceD,implementationB1.getD());
+
+
+        Factory factoryC1 = new FactoryC1();
+        String constant = "Hola";
+
+        simpleServiceLocator.setConstant("S", constant);
+        simpleServiceLocator.setService("C", factoryC1);
+        Object object2 = simpleServiceLocator.getObject("C");
+        Object object3 = simpleServiceLocator.getObject("C");
+        assertNotSame(object2, object3);
+
     }
 
     @Test
@@ -86,13 +108,22 @@ public class SimpleServiceLocatorTest {
 
         simpleServiceLocator.setConstant("S", constant);
         simpleServiceLocator.setService("C", factoryC1);
-
         Object object = simpleServiceLocator.getObject("C");
         Object object1 = simpleServiceLocator.getObject("C");
         assertNotSame(object, object1);
 
         ImplementationC1 implementationC1 = (ImplementationC1) object;
-        assertSame(constant,implementationC1.getS());
+        assertEquals(constant,implementationC1.getS());
+
+
+        Factory factoryD1 = new FactoryD1();
+        int constant1 = 0;
+
+        simpleServiceLocator.setConstant("I", constant1);
+        simpleServiceLocator.setService("D", factoryD1);
+        Object object2 = simpleServiceLocator.getObject("D");
+        Object object3 = simpleServiceLocator.getObject("D");
+        assertNotSame(object2, object3);
 
     }
 
@@ -103,13 +134,25 @@ public class SimpleServiceLocatorTest {
 
         simpleServiceLocator.setConstant("I", constant);
         simpleServiceLocator.setService("D", factoryD1);
-
         Object object = simpleServiceLocator.getObject("D");
         Object object1 = simpleServiceLocator.getObject("D");
         assertNotSame(object, object1);
 
         ImplementationD1 implementationD1 = (ImplementationD1) object;
-        assertSame(constant, implementationD1.getI());
+        assertEquals(constant, implementationD1.getI());
+
+
+        Factory factoryA1 = new FactoryA1();
+        InterfaceD interfaceD = new ImplementationD1(0);
+        InterfaceB interfaceB = new ImplementationB1(interfaceD);
+        InterfaceC interfaceC = new ImplementationC1("Hola");
+
+        simpleServiceLocator.setConstant("B",interfaceB);
+        simpleServiceLocator.setConstant("C", interfaceC);
+        simpleServiceLocator.setService("A", factoryA1);
+        Object object2 = simpleServiceLocator.getObject("A");
+        Object object3 = simpleServiceLocator.getObject("A");
+        assertNotSame(object2, object3);
 
     }
 

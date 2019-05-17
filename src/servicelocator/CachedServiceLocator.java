@@ -31,6 +31,6 @@ public class CachedServiceLocator implements ServiceLocator {
         else if(services.containsKey(name)) {
             cache.put(name, ((Factory) services.get(name)).create(this));
             return cache.get(name);
-        }else throw new LocatorError(new ClassCastException());
+        } else throw new LocatorError(new ClassCastException());
     }
 }
