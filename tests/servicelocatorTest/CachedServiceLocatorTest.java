@@ -53,11 +53,22 @@ public class CachedServiceLocatorTest {
         cachedServiceLocator.setService("A", factoryA1);
 
         Object object = cachedServiceLocator.getObject("A");
+        Object object1 = cachedServiceLocator.getObject("A");
+
+        assertSame(object, object1);
 
         ImplementationA1 implementationA1 = (ImplementationA1) object;
         assertEquals(interfaceB, implementationA1.getB());
         assertEquals(interfaceC, implementationA1.getC());
 
+        Factory factoryB1 = new FactoryB1();
+        InterfaceD interfaceE = new ImplementationD1(0);
+
+        cachedServiceLocator.setConstant("D", interfaceE);
+        cachedServiceLocator.setService("B1", factoryB1);
+        Object object2 = cachedServiceLocator.getObject("B1");
+        Object object22 = cachedServiceLocator.getObject("B1");
+        assertSame(object2, object22);
     }
 
     @Test
