@@ -1,10 +1,11 @@
 package servicelocator2;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class CachedServiceLocator implements ServiceLocator {
-    private HashMap<Class, Object> cache;
-    private HashMap<Class, FactoryT> services;
+    private Map<Class<?>, Object> cache;
+    private Map<Class<?>, FactoryT> services;
 
     public CachedServiceLocator(){
         cache = new HashMap<>();
