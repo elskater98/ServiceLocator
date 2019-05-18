@@ -2,11 +2,23 @@ package servicelocatorTest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import servicelocator.Factory;
-import servicelocator.CachedServiceLocator;
 import servicelocator.LocatorError;
-import testServices.*;
-import static org.junit.jupiter.api.Assertions.*;
+import servicelocator.CachedServiceLocator;
+import servicelocator.Factory;
+import testServices.FactoryA1;
+import testServices.FactoryB1;
+import testServices.FactoryC1;
+import testServices.FactoryD1;
+import testServices.ImplementationA1;
+import testServices.ImplementationB1;
+import testServices.ImplementationC1;
+import testServices.ImplementationD1;
+import testServices.InterfaceB;
+import testServices.InterfaceC;
+import testServices.InterfaceD;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class CachedServiceLocatorTest {
