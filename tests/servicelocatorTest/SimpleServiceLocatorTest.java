@@ -23,8 +23,8 @@ public class SimpleServiceLocatorTest {
 
     @Test
     void setServiceTestException(){
-        FactoryA1 factoryA1 = new FactoryA1();
-        FactoryA1 factoryA11 = new FactoryA1();
+        Factory factoryA1 = new FactoryA1();
+        Factory factoryA11 = new FactoryA1();
         
         assertThrows(LocatorError.class, ()-> {
             simpleServiceLocator.setService("s", factoryA1);

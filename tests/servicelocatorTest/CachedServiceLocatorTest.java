@@ -24,8 +24,8 @@ public class CachedServiceLocatorTest {
 
     @Test
     void setServiceTestException(){
-        FactoryA1 factoryA1 = new FactoryA1();
-        FactoryA1 factoryA11 = new FactoryA1();
+        Factory factoryA1 = new FactoryA1();
+        Factory factoryA11 = new FactoryA1();
         assertThrows(LocatorError.class, ()-> {
             cachedServiceLocator.setService("s", factoryA1);
             cachedServiceLocator.setService("s",factoryA11);
