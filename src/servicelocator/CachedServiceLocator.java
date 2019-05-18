@@ -7,13 +7,13 @@ public class CachedServiceLocator implements ServiceLocator {
     private HashMap<String, Factory> services;
 
     public CachedServiceLocator(){
-        factories = new HashMap<>();
+        services = new HashMap<>();
         cache = new HashMap<>();
     }
 
     public void setService(String name, Factory factory) throws LocatorError {
-        if (!factories.containsKey(name))
-            factories.put(name, factory);
+        if (!services.containsKey(name))
+            services.put(name, factory);
         else
             throw new LocatorError(new ClassCastException());
     }
