@@ -25,8 +25,6 @@ public class SimpleServiceLocatorTest {
     @Test
     @DisplayName("Check Throws LocatorError when use setService")
     void setServiceTestException(){
-        Factory factoryA1 = new FactoryA1();
-        Factory factoryA11 = new FactoryA1();
 
         assertThrows(LocatorError.class, ()-> {
             simpleServiceLocator.setService("s", new FactoryA1());
