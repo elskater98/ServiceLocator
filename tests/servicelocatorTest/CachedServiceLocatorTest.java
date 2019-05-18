@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import servicelocator.Factory;
 import servicelocator.CachedServiceLocator;
 import servicelocator.LocatorError;
+import testInterfaces.*;
 import testServices.*;
 import static org.junit.jupiter.api.Assertions.*;
 

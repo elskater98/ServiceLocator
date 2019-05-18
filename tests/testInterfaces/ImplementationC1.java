@@ -1,4 +1,4 @@
-package testServices;
+package testInterfaces;
 
 public class ImplementationC1 implements InterfaceC {
     private String s;
