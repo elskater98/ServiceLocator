@@ -3,6 +3,8 @@ package testServices;
 import servicelocator.Factory;
 import servicelocator.LocatorError;
 import servicelocator.ServiceLocator;
+import testInterfaces.ImplementationD1;
+import testInterfaces.InterfaceD;
 
 public class FactoryD1 implements Factory {
     @Override

@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import servicelocator.LocatorError;
-import servicelocator.SimpleServiceLocator;
-import servicelocator.Factory;
+import servicelocator.*;
+import testInterfaces.*;
 import testServices.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -25,6 +25,8 @@ public class SimpleServiceLocatorTest {
     @Test
     @DisplayName("Check Throws LocatorError when use setService")
     void setServiceTestException(){
+        Factory factoryA1 = new FactoryA1();
+        Factory factoryA11 = new FactoryA1();
 
         assertThrows(LocatorError.class, ()-> {
             simpleServiceLocator.setService("s", new FactoryA1());

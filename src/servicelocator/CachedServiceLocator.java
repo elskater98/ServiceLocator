@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class CachedServiceLocator implements ServiceLocator {
     private HashMap<String, Object> cache;
-    private HashMap<String, Factory> factories;
+    private HashMap<String, Factory> services;
 
     public CachedServiceLocator(){
         factories = new HashMap<>();
@@ -30,8 +30,8 @@ public class CachedServiceLocator implements ServiceLocator {
     public Object getObject(String name) throws LocatorError {
         if (cache.containsKey(name))
             return cache.get(name);
-        else if(factories.containsKey(name)) {
-            cache.put(name, (factories.get(name)).create(this));
+        else if(services.containsKey(name)) {
+            cache.put(name, services.get(name).create(this));
             return cache.get(name);
         } else throw new LocatorError(new ClassCastException());
     }

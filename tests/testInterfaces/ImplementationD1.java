@@ -1,4 +1,4 @@
-package testServices;
+package testInterfaces;
 
 public class ImplementationD1 implements InterfaceD {
     private int i;

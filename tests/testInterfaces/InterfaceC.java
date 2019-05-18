@@ -1,4 +1,4 @@
-package testServices;
+package testInterfaces;
 
 public interface InterfaceC {
 }
