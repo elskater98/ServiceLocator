@@ -1,6 +1,7 @@
 package servicelocatorTest;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import servicelocator.LocatorError;
 import servicelocator.CachedServiceLocator;
@@ -23,30 +24,29 @@ public class CachedServiceLocatorTest {
 
 
     @Test
+    @DisplayName("Check Throws LocatorError when use setService")
     void setServiceTestException(){
-        Factory factoryA1 = new FactoryA1();
-        Factory factoryA11 = new FactoryA1();
         assertThrows(LocatorError.class, ()-> {
-            cachedServiceLocator.setService("s", factoryA1);
-            cachedServiceLocator.setService("s",factoryA11);
+            cachedServiceLocator.setService("s", new FactoryA1());
+            cachedServiceLocator.setService("s",new FactoryA1());
         });
-
     }
 
     @Test
+    @DisplayName("Check Throws LocatorError when use setConstant")
     void setConstantTestException(){
-        Object object1 = new Object();
-        Object object11 = new Object();
+
         assertThrows(LocatorError.class, ()-> {
-            cachedServiceLocator.setConstant("s", object1);
-            cachedServiceLocator.setConstant("s",object11);
+            cachedServiceLocator.setConstant("s", new Object());
+            cachedServiceLocator.setConstant("s",new Object());
         });
 
     }
 
     @Test
+    @DisplayName("Check setService using FactoryA1")
     void setServiceTestA1() throws LocatorError{
-        Factory factoryA1 = new FactoryA1();
+
         InterfaceD interfaceD = new ImplementationD1(0);
         InterfaceB interfaceB = new ImplementationB1(interfaceD);
         InterfaceC interfaceC = new ImplementationC1("Hola");
@@ -54,10 +54,10 @@ public class CachedServiceLocatorTest {
         //Test with one factory same object reference
         cachedServiceLocator.setConstant("B",interfaceB);
         cachedServiceLocator.setConstant("C", interfaceC);
-        cachedServiceLocator.setService("A", factoryA1);
+        cachedServiceLocator.setService("A", new FactoryA1());
         Object object = cachedServiceLocator.getObject("A");
-        Object object1 = cachedServiceLocator.getObject("A");
-        assertSame(object, object1);
+
+        assertSame(object, cachedServiceLocator.getObject("A"));
 
         //Test setting the factory correctly
         ImplementationA1 implementationA1 = (ImplementationA1) object;
@@ -65,95 +65,82 @@ public class CachedServiceLocatorTest {
         assertEquals(interfaceC, implementationA1.getC());
 
         //Test with two factory
-        Factory factoryB1 = new FactoryB1();
+
         InterfaceD interfaceD1 = new ImplementationD1(0);
 
         cachedServiceLocator.setConstant("D", interfaceD1);
-        cachedServiceLocator.setService("B1", factoryB1);
-        Object object2 = cachedServiceLocator.getObject("B1");
-        Object object3 = cachedServiceLocator.getObject("B1");
-        assertSame(object2, object3);
+        cachedServiceLocator.setService("B1", new FactoryB1());
+        assertSame(cachedServiceLocator.getObject("B1"), cachedServiceLocator.getObject("B1"));
 
     }
 
     @Test
+    @DisplayName("Check setService using FactoryB1")
     void setServiceTestB1() throws LocatorError{
-        Factory factoryB1 = new FactoryB1();
+
         InterfaceD interfaceD = new ImplementationD1(0);
 
         cachedServiceLocator.setConstant("D", interfaceD);
-        cachedServiceLocator.setService("B", factoryB1);
+        cachedServiceLocator.setService("B", new FactoryB1());
         Object object = cachedServiceLocator.getObject("B");
-        Object object1 = cachedServiceLocator.getObject("B");
-        assertSame(object, object1);
+
+        assertSame(object, cachedServiceLocator.getObject("B"));
 
         ImplementationB1 implementationB1 = (ImplementationB1) object;
         assertEquals(interfaceD,implementationB1.getD());
 
+        cachedServiceLocator.setConstant("S", "Hola");
+        cachedServiceLocator.setService("C", new FactoryC1());
 
-        Factory factoryC1 = new FactoryC1();
-        String constant = "Hola";
-
-        cachedServiceLocator.setConstant("S", constant);
-        cachedServiceLocator.setService("C", factoryC1);
-        Object object2 = cachedServiceLocator.getObject("C");
-        Object object3 = cachedServiceLocator.getObject("C");
-        assertSame(object2, object3);
+        assertSame(cachedServiceLocator.getObject("C"), cachedServiceLocator.getObject("C"));
 
     }
 
     @Test
+    @DisplayName("Check setService using FactoryC1")
     void setServiceTestC1() throws LocatorError{
-        Factory factoryC1 = new FactoryC1();
         String constant = "Hola";
 
         cachedServiceLocator.setConstant("S", constant);
-        cachedServiceLocator.setService("C", factoryC1);
+        cachedServiceLocator.setService("C",  new FactoryC1());
         Object object = cachedServiceLocator.getObject("C");
-        Object object1 = cachedServiceLocator.getObject("C");
-        assertSame(object, object1);
+
+        assertSame(object, cachedServiceLocator.getObject("C"));
 
         ImplementationC1 implementationC1 = (ImplementationC1) object;
         assertEquals(constant,implementationC1.getS());
 
-
-        Factory factoryD1 = new FactoryD1();
         int constant1 = 0;
         cachedServiceLocator.setConstant("I", constant1);
-        cachedServiceLocator.setService("D", factoryD1);
+        cachedServiceLocator.setService("D", new FactoryD1());
 
-        Object object2 = cachedServiceLocator.getObject("D");
-        Object object3 = cachedServiceLocator.getObject("D");
-        assertSame(object2, object3);
+        assertSame(cachedServiceLocator.getObject("D"),cachedServiceLocator.getObject("D"));
 
     }
 
     @Test
+    @DisplayName("Check setService using FactoryD1")
     void setServiceTestD1() throws LocatorError{
-        Factory factoryD1 = new FactoryD1();
         int constant = 0;
 
         cachedServiceLocator.setConstant("I", constant);
-        cachedServiceLocator.setService("D", factoryD1);
+        cachedServiceLocator.setService("D", new FactoryD1());
         Object object = cachedServiceLocator.getObject("D");
-        Object object1 = cachedServiceLocator.getObject("D");
-        assertSame(object, object1);
+        assertSame(object, cachedServiceLocator.getObject("D"));
 
         ImplementationD1 implementationD1 = (ImplementationD1) object;
         assertEquals(constant, implementationD1.getI());
 
 
-        Factory factoryA1 = new FactoryA1();
         InterfaceD interfaceD = new ImplementationD1(0);
         InterfaceB interfaceB = new ImplementationB1(interfaceD);
         InterfaceC interfaceC = new ImplementationC1("Hola");
 
         cachedServiceLocator.setConstant("B",interfaceB);
         cachedServiceLocator.setConstant("C", interfaceC);
-        cachedServiceLocator.setService("A", factoryA1);
-        Object object2 = cachedServiceLocator.getObject("A");
-        Object object3 = cachedServiceLocator.getObject("A");
-        assertSame(object2, object3);
+        cachedServiceLocator.setService("A", new FactoryA1());
+
+        assertSame(cachedServiceLocator.getObject("A"), cachedServiceLocator.getObject("A"));
 
     }
 
