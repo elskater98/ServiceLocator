@@ -52,14 +52,14 @@ public class SimpleServiceLocator2Test {
         T interfaceC = (T) new ImplementationC1("Hola");
         Class interfaceBClass = InterfaceB.class;
         Class interfaceCClass = InterfaceC.class;
-        Class string = String.class;
+        //Class string = String.class;
 
         simpleServiceLocator.setConstant(interfaceBClass, interfaceB);
         simpleServiceLocator.setConstant(interfaceCClass, interfaceC);
-        simpleServiceLocator.setService(string, factoryA1);
+        simpleServiceLocator.setService(FactoryA1.class, factoryA1);
 
-        T object = (T) simpleServiceLocator.getObject(string);
-        T object1 = (T) simpleServiceLocator.getObject(string);
+        T object = (T) simpleServiceLocator.getObject(FactoryA1.class);
+        T object1 = (T) simpleServiceLocator.getObject(FactoryA1.class);
         assertNotSame(object, object1);
 
     }
