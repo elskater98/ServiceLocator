@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class CachedServiceLocator implements ServiceLocator {
     private Map<Class<?>, Object> cache;
-    private Map<Class<?>, FactoryT> services;
+    private Map<Class<?>, FactoryT<?>> services;
 
     public CachedServiceLocator(){
         cache = new HashMap<>();

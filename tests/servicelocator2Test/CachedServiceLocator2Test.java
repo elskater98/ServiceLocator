@@ -6,8 +6,8 @@ import servicelocator2.CachedServiceLocator;
 import servicelocator2.FactoryT;
 import servicelocator2.LocatorError;
 import testInterfaces.*;
-import testServices2.FactoryA1;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import testServices2.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SuppressWarnings("unchecked")
@@ -21,36 +21,64 @@ public class CachedServiceLocator2Test {
         cachedServiceLocator2 = new CachedServiceLocator();
     }
 
+    @Test
+    void setServiceTestException(){
+        FactoryA1 factoryA1 = new FactoryA1();
+        FactoryA1 factoryA11 = new FactoryA1();
+        assertThrows(LocatorError.class, ()->{
+            cachedServiceLocator2.setService(FactoryA1.class, factoryA1);
+            cachedServiceLocator2.setService(FactoryA1.class, factoryA11);
+        });
+    }
+
+    @Test
+    void setConstantTestException() {
+        InterfaceC interface1 = new ImplementationC1("Hola");
+        InterfaceC interface2 = new ImplementationC1("Hola");
+        assertThrows(LocatorError.class, ()->{
+            cachedServiceLocator2.setConstant(InterfaceC.class, interface1);
+            cachedServiceLocator2.setConstant(InterfaceC.class, interface2);
+        });
+    }
 
     @Test
     <T> void setServiceTest() throws LocatorError {
         FactoryT factoryA1 = new FactoryA1();
         InterfaceD interfaceD = new ImplementationD1(0);
-        T interfaceB = (T) new ImplementationB1(interfaceD);
-        T interfaceC = (T) new ImplementationC1("Hola");
+        InterfaceB interfaceB = new ImplementationB1(interfaceD);
+        InterfaceC interfaceC = new ImplementationC1("Hola");
         Class interfaceBClass = InterfaceB.class;
         Class interfaceCClass = InterfaceC.class;
-        //Class string = String.class;
+        Class interfaceDClass = InterfaceD.class;
+        Class factoryA1Class = FactoryA1.class;
 
         cachedServiceLocator2.setConstant(interfaceBClass, interfaceB);
         cachedServiceLocator2.setConstant(interfaceCClass, interfaceC);
-        cachedServiceLocator2.setService(FactoryA1.class, factoryA1);
+        cachedServiceLocator2.setService(factoryA1Class, factoryA1);
 
-        T object = (T) cachedServiceLocator2.getObject(FactoryA1.class);
-        T object1 = (T) cachedServiceLocator2.getObject(FactoryA1.class);
+        T object = (T) cachedServiceLocator2.getObject(factoryA1Class);
+        T object1 = (T) cachedServiceLocator2.getObject(factoryA1Class);
         assertSame(object, object1);
+
+        FactoryB1 factoryB1 = new FactoryB1();
+        cachedServiceLocator2.setConstant(interfaceDClass, interfaceD);
+        cachedServiceLocator2.setService(FactoryB1.class, factoryB1);
+        assertSame(cachedServiceLocator2.getObject(FactoryB1.class), cachedServiceLocator2.getObject(FactoryB1.class));
     }
 
-
     @Test
-    void setConstantTest(){
+    <T> void setConstantTest() throws LocatorError{
+        InterfaceD interfaceD = new ImplementationD1(0);
+        InterfaceB interfaceB = new ImplementationB1(interfaceD);
+        InterfaceC interfaceC = new ImplementationC1("Hola");
+        Class interfaceBClass = InterfaceB.class;
+        Class interfaceCClass = InterfaceC.class;
 
-    }
+        cachedServiceLocator2.setConstant(interfaceBClass, interfaceB);
+        assertSame(cachedServiceLocator2.getObject(interfaceBClass), cachedServiceLocator2.getObject(interfaceBClass));
 
-
-    @Test
-    void getObjectTest(){
-
+        cachedServiceLocator2.setConstant(interfaceCClass, interfaceC);
+        assertSame(cachedServiceLocator2.getObject(interfaceCClass), cachedServiceLocator2.getObject(interfaceCClass));
     }
 
 }

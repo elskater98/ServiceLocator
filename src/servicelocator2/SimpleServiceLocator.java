@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SimpleServiceLocator implements ServiceLocator {
-    private Map<Class<?>, FactoryT> factories;
+    private Map<Class<?>, FactoryT<?>> factories;
     private Map<Class<?>, Object> constants;
 
     public SimpleServiceLocator(){
