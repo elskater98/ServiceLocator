@@ -1,10 +1,11 @@
 package servicelocator;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class CachedServiceLocator implements ServiceLocator {
-    private HashMap<String, Object> cache;
-    private HashMap<String, Factory> services;
+    private Map<String, Object> cache;
+    private Map<String, Factory> services;
 
     public CachedServiceLocator(){
         services = new HashMap<>();
@@ -19,8 +20,7 @@ public class CachedServiceLocator implements ServiceLocator {
     }
 
     public void setConstant(String name, Object value) throws LocatorError {
-        /*Per l'informe*/ /*Com que es guardaran objectes tan si son constants com els objectes que crein les factories
-                            no cal un tercer hashmap per fer de cache d'objectes creats per factories*/
+
         if (!cache.containsKey(name))
             cache.put(name, value);
         else

@@ -1,10 +1,11 @@
 package servicelocator;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class SimpleServiceLocator implements ServiceLocator {
-    private HashMap<String, Factory> factories;
-    private HashMap<String, Object> constants;
+    private Map<String, Factory> factories;
+    private Map<String, Object> constants;
 
     public SimpleServiceLocator(){
         factories = new HashMap<>();
@@ -26,11 +27,9 @@ public class SimpleServiceLocator implements ServiceLocator {
     }
 
     public Object getObject(String name) throws LocatorError {
-        /*Per l'informe*/ /*Si hi ha dos objectes amb
-                           el mateix nom independentment si es factoria o constant, excepció*/
+
         if (factories.containsKey(name) && constants.containsKey(name))
             throw new LocatorError(new ClassCastException());
-
         if (constants.containsKey(name))
             return constants.get(name);
         else if (factories.containsKey(name))
