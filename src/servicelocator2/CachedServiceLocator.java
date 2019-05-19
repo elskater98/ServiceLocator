@@ -16,14 +16,14 @@ public class CachedServiceLocator implements ServiceLocator {
         if (!services.containsKey(klass))
             services.put(klass, factoryT);
         else
-            throw new LocatorError(new ClassCastException());
+            throw new LocatorError();
     }
 
     public <T> void setConstant(Class<T> klass, T value) throws LocatorError {
         if (!cache.containsKey(klass))
             cache.put(klass, value);
         else
-            throw new LocatorError(new ClassCastException());
+            throw new LocatorError();
     }
 
     @SuppressWarnings("unchecked")
@@ -33,6 +33,6 @@ public class CachedServiceLocator implements ServiceLocator {
         else if(services.containsKey(klass)) {
             cache.put(klass, services.get(klass).create(this));
             return (T) cache.get(klass);
-        }else throw new LocatorError(new ClassCastException());
+        }else throw new LocatorError();
     }
 }
