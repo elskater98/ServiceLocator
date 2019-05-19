@@ -1,6 +1,7 @@
 package servicelocator2Test;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import servicelocator2.FactoryT;
 import servicelocator2.LocatorError;
@@ -24,6 +25,7 @@ public class SimpleServiceLocator2Test {
 
 
     @Test
+    @DisplayName("Check Throws LocatorError when use setService")
     void setServiceTestException() {
         FactoryT factoryA1 = new FactoryA1();
         FactoryT factoryA11 = new FactoryA1();
@@ -35,6 +37,7 @@ public class SimpleServiceLocator2Test {
     }
 
     @Test
+    @DisplayName("Check Throws LocatorError when use setConstant")
     <T> void  setConstantTestException() {
         T object = (T) "Object";
         T object1 = (T) "Object1";
@@ -46,6 +49,7 @@ public class SimpleServiceLocator2Test {
     }
 
     @Test
+    @DisplayName("Check setService using FactoryA1")
     <T> void setServiceTestA1() throws LocatorError {
         FactoryT factoryA1 = new FactoryA1();
         InterfaceD interfaceD = new ImplementationD1(0);
@@ -65,6 +69,7 @@ public class SimpleServiceLocator2Test {
     }
 
     @Test
+    @DisplayName("Check setService using FactoryB1")
     <T> void setServiceTestB1() throws LocatorError {
         FactoryT factoryB1 = new FactoryB1();
         T interfaceD = (T) new ImplementationD1(0);
@@ -80,6 +85,7 @@ public class SimpleServiceLocator2Test {
     }
 
     @Test
+    @DisplayName("Check setService using FactoryC1")
     <T> void setServiceTestC1() throws LocatorError {
         FactoryT factoryC1 = new FactoryC1();
         T constant = (T) "Hola";
@@ -94,6 +100,7 @@ public class SimpleServiceLocator2Test {
     }
 
     @Test
+    @DisplayName("Check setService using FactoryD1")
     <T> void setServiceTestD1() throws LocatorError {
         FactoryT factoryD1 = new FactoryD1();
         Integer integer = 0;

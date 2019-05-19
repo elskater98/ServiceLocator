@@ -1,6 +1,7 @@
 package servicelocator2Test;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import servicelocator2.CachedServiceLocator;
 import servicelocator2.FactoryT;
@@ -21,7 +22,9 @@ public class CachedServiceLocator2Test {
         cachedServiceLocator2 = new CachedServiceLocator();
     }
 
+
     @Test
+    @DisplayName("Check Throws LocatorError when use setService")
     void setServiceTestException(){
         FactoryA1 factoryA1 = new FactoryA1();
         FactoryA1 factoryA11 = new FactoryA1();
@@ -32,6 +35,7 @@ public class CachedServiceLocator2Test {
     }
 
     @Test
+    @DisplayName("Check Throws LocatorError when use setConstant")
     void setConstantTestException() {
         InterfaceC interface1 = new ImplementationC1("Hola");
         InterfaceC interface2 = new ImplementationC1("Hola");
@@ -42,6 +46,7 @@ public class CachedServiceLocator2Test {
     }
 
     @Test
+    @DisplayName("Check setService using FactoryA1")
     <T> void setServiceTest() throws LocatorError {
         FactoryT factoryA1 = new FactoryA1();
         InterfaceD interfaceD = new ImplementationD1(0);
@@ -64,21 +69,6 @@ public class CachedServiceLocator2Test {
         cachedServiceLocator2.setConstant(interfaceDClass, interfaceD);
         cachedServiceLocator2.setService(FactoryB1.class, factoryB1);
         assertSame(cachedServiceLocator2.getObject(FactoryB1.class), cachedServiceLocator2.getObject(FactoryB1.class));
-    }
-
-    @Test
-    <T> void setConstantTest() throws LocatorError{
-        InterfaceD interfaceD = new ImplementationD1(0);
-        InterfaceB interfaceB = new ImplementationB1(interfaceD);
-        InterfaceC interfaceC = new ImplementationC1("Hola");
-        Class interfaceBClass = InterfaceB.class;
-        Class interfaceCClass = InterfaceC.class;
-
-        cachedServiceLocator2.setConstant(interfaceBClass, interfaceB);
-        assertSame(cachedServiceLocator2.getObject(interfaceBClass), cachedServiceLocator2.getObject(interfaceBClass));
-
-        cachedServiceLocator2.setConstant(interfaceCClass, interfaceC);
-        assertSame(cachedServiceLocator2.getObject(interfaceCClass), cachedServiceLocator2.getObject(interfaceCClass));
     }
 
 }
