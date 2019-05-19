@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import servicelocator.LocatorError;
-import servicelocator.*;
+import servicelocator.SimpleServiceLocator;
 import testInterfaces.*;
 import testServices.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -53,7 +53,7 @@ public class SimpleServiceLocatorTest {
         InterfaceB interfaceB = new ImplementationB1(interfaceD);
         InterfaceC interfaceC = new ImplementationC1("Hola");
 
-        //Test with one factory same object reference
+        //Test with one factory get different objects
         simpleServiceLocator.setConstant("B",interfaceB);
         simpleServiceLocator.setConstant("C", interfaceC);
         simpleServiceLocator.setService("A", new FactoryA1());
@@ -66,8 +66,7 @@ public class SimpleServiceLocatorTest {
         assertEquals(interfaceB, implementationA1.getB());
         assertEquals(interfaceC, implementationA1.getC());
 
-        //Test with two factory
-
+        //Test with two factories
         simpleServiceLocator.setConstant("D", new ImplementationD1(0));
         simpleServiceLocator.setService("B1", new FactoryB1());
         assertNotSame(simpleServiceLocator.getObject("B1"), simpleServiceLocator.getObject("B1"));
@@ -106,7 +105,6 @@ public class SimpleServiceLocatorTest {
         simpleServiceLocator.setService("C", new FactoryC1());
 
         Object object = simpleServiceLocator.getObject("C");
-
         assertNotSame(object, simpleServiceLocator.getObject("C"));
 
         ImplementationC1 implementationC1 = (ImplementationC1) object;
@@ -136,7 +134,6 @@ public class SimpleServiceLocatorTest {
 
         ImplementationD1 implementationD1 = (ImplementationD1) object;
         assertEquals(constant, implementationD1.getI());
-
 
 
         InterfaceD interfaceD = new ImplementationD1(0);
